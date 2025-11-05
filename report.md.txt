@@ -1,0 +1,29 @@
+# Task 2 Report – Pixel Manipulation for Image Encryption
+
+**Objective**  
+Develop a simple image encryption tool using pixel manipulation (swap/apply math to pixels). Allow users to encrypt and decrypt images.
+
+**Approach**  
+- Implemented two reversible methods:
+  1) **XOR** per-channel with a user key (0–255). Same op decrypts.
+  2) **SWAP** channels R↔B. Applying twice restores original.
+- Used Python **Pillow** to load/save images. Saved outputs as PNG to avoid compression artifacts.
+
+**Testing**  
+- Input: `input.jpg`
+- Encrypt (xor, key=123) → `encrypted.png` (appears noisy)
+- Decrypt (xor, key=123) → `decrypted.png` (visually matches original)
+- Swap method also tested: `swap_enc.png` → `swap_dec.png`
+- Evidence: `screenshots/01_encrypt.png`, `screenshots/02_decrypt.png`
+
+**Results**  
+Both methods produced reversible transformations. XOR provides stronger obfuscation than channel swap.
+
+**Limitations**  
+- XOR with a single key is not cryptographically secure for production use.
+- No metadata encryption; EXIF remains unchanged.
+
+**Next Steps**  
+- Add per-pixel keystream (PRNG) or password→KDF→byte stream.
+- Add CLI option to compare hashes and confirm exact match automatically.
+- Batch processing for folders.
